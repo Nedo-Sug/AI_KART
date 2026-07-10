@@ -1,0 +1,25 @@
+[Unit]
+Description=AI KAPT — Игра Дурак с ИИ-обучением
+Documentation=https://github.com/Nedo-Sug/AI_KART
+After=network.target
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=__REPO_DIR__
+ExecStart=/usr/bin/node __REPO_DIR__/backend/dist/index.js
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=PORT=4100
+
+SyslogIdentifier=ai-kapt
+StandardOutput=journal
+StandardError=journal
+
+ReadOnlyPaths=__REPO_DIR__/frontend/dist
+ReadOnlyPaths=__REPO_DIR__/UI_KAPTI
+ReadWritePaths=__REPO_DIR__/backend/data
+
+[Install]
+WantedBy=multi-user.target
