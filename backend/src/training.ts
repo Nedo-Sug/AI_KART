@@ -1,10 +1,14 @@
 import { mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { DurakGame } from "./engine.js";
 import { DurakPolicy, encodeState, moveToActionIndex, Experience } from "./model.js";
 import { GameMode, GameSnapshot, TrainingConfig, TrainingSnapshot } from "./types.js";
 
-const DATA_DIR = join(process.cwd(), "backend", "data");
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = resolve(__dirname, "..", "..");
+
+const DATA_DIR = join(PROJECT_ROOT, "backend", "data");
 const MODEL_PATH = join(DATA_DIR, "model.json");
 
 export class TrainingManager {

@@ -2,7 +2,8 @@ import cors from "cors";
 import express from "express";
 import { createServer } from "node:http";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Server } from "socket.io";
 import { DurakGame } from "./engine.js";
 import { DurakPolicy } from "./model.js";
@@ -10,10 +11,13 @@ import { TrainingManager } from "./training.js";
 import { GameMode, Move, TrainingConfig } from "./types.js";
 import { GameStore } from "./store.js";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = resolve(__dirname, "..", "..");
+
 const PORT = Number(process.env.PORT ?? 4100);
-const frontendDist = join(process.cwd(), "frontend", "dist");
-const atlasPath = join(process.cwd(), "Koloda-kart.png");
-const uiKaptiPath = join(process.cwd(), "UI_KAPTI");
+const frontendDist = join(PROJECT_ROOT, "frontend", "dist");
+const atlasPath = join(PROJECT_ROOT, "Koloda-kart.png");
+const uiKaptiPath = join(PROJECT_ROOT, "UI_KAPTI");
 const app = express();
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: true, credentials: true } });
